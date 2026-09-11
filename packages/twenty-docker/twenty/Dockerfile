@@ -294,7 +294,11 @@ ENV PG_DATABASE_URL=postgres://twenty:twenty@localhost:5432/default \
     APPLICATION_LOG_DRIVER=CONSOLE
 
 EXPOSE 2020
-VOLUME ["/data/postgres", "/app/packages/twenty-server/.local-storage"]
+# Railway rejects any Dockerfile containing a VOLUME instruction, and it
+# validates the whole file rather than only the stage it builds. This stage is
+# never built on Railway, so the declaration is commented out to keep the file
+# parseable. Restore it if building twenty-app-dev outside Railway.
+# VOLUME ["/data/postgres", "/app/packages/twenty-server/.local-storage"]
 
 LABEL org.opencontainers.image.source=https://github.com/twentyhq/twenty
 LABEL org.opencontainers.image.description="All-in-one Twenty image for local development and SDK usage. Includes PostgreSQL, Redis, server, and worker."
