@@ -300,3 +300,15 @@ LABEL org.opencontainers.image.source=https://github.com/twentyhq/twenty
 LABEL org.opencontainers.image.description="All-in-one Twenty image for local development and SDK usage. Includes PostgreSQL, Redis, server, and worker."
 
 ENTRYPOINT ["/init"]
+
+
+# ===========================================================================
+# Target: railway (deployment target for Railway)
+#   Railway builds the final stage of a Dockerfile and does not support
+#   --target, so re-export the production "twenty" target (server + frontend)
+#   here. Without this, Railway would build "twenty-app-dev", the all-in-one
+#   development image that embeds PostgreSQL and Redis.
+#   Keep this stage last.
+# ===========================================================================
+
+FROM twenty AS railway
