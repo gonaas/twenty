@@ -1,0 +1,42 @@
+{
+  "name": "@wyre/linkedin-voyager-shim",
+  "version": "1.0.0",
+  "license": "UNLICENSED",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": "^24.5.0",
+    "npm": "please-use-yarn",
+    "yarn": ">=4.0.2"
+  },
+  "packageManager": "yarn@4.9.2",
+  "scripts": {
+    "dev": "node --env-file-if-exists=.env --import tsx src/main.ts",
+    "build": "tsup",
+    "start": "node dist/main.js",
+    "lint": "oxlint -c .oxlintrc.json .",
+    "lint:fix": "oxlint --fix -c .oxlintrc.json .",
+    "typecheck": "tsgo --noEmit -p tsconfig.spec.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "session:login": "node --env-file-if-exists=.env --import tsx scripts/session-login.ts",
+    "spike:capture": "node --env-file-if-exists=.env --import tsx scripts/spike-capture.ts",
+    "spike:probe": "node --env-file-if-exists=.env --import tsx scripts/spike-probe.ts"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.14.0",
+    "hono": "^4.7.0",
+    "playwright": "1.60.0",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.7.2",
+    "@typescript/native-preview": "^7.0.0-dev.20260116.1",
+    "oxlint": "^0.16.0",
+    "tsup": "^8.5.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.3",
+    "vite-tsconfig-paths": "^4.2.1",
+    "vitest": "^4.0.0"
+  }
+}

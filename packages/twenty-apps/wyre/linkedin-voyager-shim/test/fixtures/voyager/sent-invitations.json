@@ -1,0 +1,48 @@
+{
+  "data": {
+    "metadata": { "invitationType": "CONNECTION", "$type": "com.linkedin.voyager.relationships.invitation.SentInvitationsMetadata" },
+    "entityUrn": "urn:li:collectionResponse:fixture",
+    "paging": { "count": 100, "start": 0, "links": [] },
+    "*elements": ["urn:li:fs_relSentInvitationView:urn:li:invitation:7001"],
+    "$type": "com.linkedin.restli.common.CollectionResponse"
+  },
+  "included": [
+    {
+      "entityUrn": "urn:li:fs_relSentInvitationView:urn:li:invitation:7001",
+      "$type": "com.linkedin.voyager.relationships.invitation.SentInvitationViewV2",
+      "*invitation": "urn:li:fs_relInvitation:7001",
+      "genericSentInvitationView": null
+    },
+    {
+      "fromMemberId": "ACoAAAAAAAME",
+      "*toMember": "urn:li:fs_miniProfile:ACoAAAAAAA3",
+      "mailboxItemId": "urn:li:invitation:7001",
+      "toMemberId": "ACoAAAAAAA3",
+      "message": "Hi Carol, let's connect.",
+      "invitee": { "*miniProfile": "urn:li:fs_miniProfile:ACoAAAAAAA3", "$type": "com.linkedin.voyager.relationships.invitation.ProfileInvitee" },
+      "$type": "com.linkedin.voyager.relationships.invitation.Invitation",
+      "invitationType": "SENT",
+      "entityUrn": "urn:li:fs_relInvitation:7001",
+      "sentTime": 1757400000000,
+      "customMessage": true,
+      "sharedSecret": "dummy",
+      "*fromMember": "urn:li:fs_miniProfile:ACoAAAAAAAME"
+    },
+    {
+      "entityUrn": "urn:li:fs_miniProfile:ACoAAAAAAA3",
+      "$type": "com.linkedin.voyager.identity.shared.MiniProfile",
+      "firstName": "Carol",
+      "lastName": "Invited",
+      "occupation": "Founder",
+      "publicIdentifier": "carol-invited",
+      "objectUrn": "urn:li:member:3"
+    },
+    {
+      "entityUrn": "urn:li:fs_miniProfile:ACoAAAAAAAME",
+      "$type": "com.linkedin.voyager.identity.shared.MiniProfile",
+      "firstName": "Me",
+      "lastName": "Owner",
+      "publicIdentifier": "me-owner"
+    }
+  ]
+}

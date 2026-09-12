@@ -1,0 +1,58 @@
+{
+  "data": {
+    "entityUrn": "urn:li:collectionResponse:fixture",
+    "paging": { "count": 40, "start": 0, "links": [] },
+    "*elements": [
+      "urn:li:fsd_connection:ACoAAAAAAA1",
+      "urn:li:fsd_connection:ACoAAAAAAA2",
+      "urn:li:fsd_connection:ACoAAAAAAA3"
+    ],
+    "$type": "com.linkedin.restli.common.CollectionResponse"
+  },
+  "included": [
+    {
+      "createdAt": 1789115449000,
+      "connectedMember": "urn:li:fsd_profile:ACoAAAAAAA1",
+      "entityUrn": "urn:li:fsd_connection:ACoAAAAAAA1",
+      "*connectedMemberResolutionResult": "urn:li:fsd_profile:ACoAAAAAAA1",
+      "$recipeTypes": ["com.linkedin.voyager.dash.deco.web.mynetwork.ConnectionListWithProfile"],
+      "$type": "com.linkedin.voyager.dash.relationships.Connection"
+    },
+    {
+      "lastName": "Example",
+      "memorialized": false,
+      "$recipeTypes": ["com.linkedin.voyager.dash.deco.web.mynetwork.ConnectionProfile"],
+      "$type": "com.linkedin.voyager.dash.identity.profile.Profile",
+      "firstName": "Alice",
+      "entityUrn": "urn:li:fsd_profile:ACoAAAAAAA1",
+      "publicIdentifier": "alice-example",
+      "headline": "CTO at Example"
+    },
+    {
+      "createdAt": 1788500000000,
+      "connectedMember": "urn:li:fsd_profile:ACoAAAAAAA2",
+      "entityUrn": "urn:li:fsd_connection:ACoAAAAAAA2",
+      "*connectedMemberResolutionResult": "urn:li:fsd_profile:ACoAAAAAAA2",
+      "$recipeTypes": ["com.linkedin.voyager.dash.deco.web.mynetwork.ConnectionListWithProfile"],
+      "$type": "com.linkedin.voyager.dash.relationships.Connection"
+    },
+    {
+      "lastName": "Hidden",
+      "memorialized": false,
+      "$recipeTypes": ["com.linkedin.voyager.dash.deco.web.mynetwork.ConnectionProfile"],
+      "$type": "com.linkedin.voyager.dash.identity.profile.Profile",
+      "firstName": "Bob",
+      "entityUrn": "urn:li:fsd_profile:ACoAAAAAAA2",
+      "publicIdentifier": null,
+      "headline": null
+    },
+    {
+      "createdAt": 1788400000000,
+      "connectedMember": "urn:li:fsd_profile:ACoAAAAAAA3",
+      "entityUrn": "urn:li:fsd_connection:ACoAAAAAAA3",
+      "*connectedMemberResolutionResult": "urn:li:fsd_profile:ACoAAAAAAA3",
+      "$recipeTypes": ["com.linkedin.voyager.dash.deco.web.mynetwork.ConnectionListWithProfile"],
+      "$type": "com.linkedin.voyager.dash.relationships.Connection"
+    }
+  ]
+}

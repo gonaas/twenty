@@ -1,0 +1,27 @@
+{
+  "data": {
+    "memberRelationshipUnion": {
+      "noConnection": {
+        "memberDistance": "DISTANCE_2",
+        "invitationUnion": {
+          "noInvitation": {
+            "targetInvitee": "urn:li:fsd_profile:ACoAAAAAAA3",
+            "inviter": "urn:li:fsd_profile:ACoAAAAAAAME",
+            "$type": "com.linkedin.voyager.dash.relationships.invitation.NoInvitation"
+          }
+        },
+        "$type": "com.linkedin.voyager.dash.relationships.NoConnection"
+      }
+    },
+    "entityUrn": "urn:li:fsd_memberRelationship:ACoAAAAAAA3",
+    "memberRelationshipData": {
+      "noInvitation": {
+        "targetInvitee": "urn:li:fsd_profile:ACoAAAAAAA3",
+        "inviter": "urn:li:fsd_profile:ACoAAAAAAAME",
+        "$type": "com.linkedin.voyager.dash.relationships.invitation.NoInvitation"
+      }
+    },
+    "$type": "com.linkedin.voyager.dash.relationships.MemberRelationship"
+  },
+  "included": []
+}

@@ -1,0 +1,16 @@
+{
+  "data": {
+    "entityUrn": "urn:li:fs_me",
+    "plainId": 123456,
+    "*miniProfile": "urn:li:fs_miniProfile:ACoAAAAAAAME"
+  },
+  "included": [
+    {
+      "entityUrn": "urn:li:fs_miniProfile:ACoAAAAAAAME",
+      "$type": "com.linkedin.voyager.identity.shared.MiniProfile",
+      "firstName": "Me",
+      "lastName": "Owner",
+      "publicIdentifier": "me-owner"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "data": {
+    "memberRelationshipUnion": {
+      "connection": {
+        "entityUrn": "urn:li:fsd_connection:ACoAAAAAAA1",
+        "createdAt": 1789115449000,
+        "$type": "com.linkedin.voyager.dash.relationships.Connection"
+      }
+    },
+    "entityUrn": "urn:li:fsd_memberRelationship:ACoAAAAAAA1",
+    "$type": "com.linkedin.voyager.dash.relationships.MemberRelationship"
+  },
+  "included": []
+}

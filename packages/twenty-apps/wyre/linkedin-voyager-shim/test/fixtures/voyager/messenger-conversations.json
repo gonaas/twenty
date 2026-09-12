@@ -1,0 +1,107 @@
+{
+  "data": {
+    "_recipeType": "com.linkedin.fixture",
+    "_type": "com.linkedin.messenger.ConversationCollectionResponse",
+    "messengerConversationsByCategory": {
+      "_type": "com.linkedin.restli.common.CollectionResponse",
+      "metadata": { "nextCursor": "REVTQ0VORElORw==", "_type": "com.linkedin.messenger.CursorMetadata" },
+      "elements": [
+        {
+          "entityUrn": "urn:li:msg_conversation:(urn:li:fsd_profile:ACoAAAAAAAME,2-chat-one==)",
+          "backendUrn": "urn:li:messagingThread:2-chat-one==",
+          "lastActivityAt": 1789129876484,
+          "createdAt": 1789000000000,
+          "groupChat": false,
+          "title": null,
+          "categories": ["INBOX", "PRIMARY_INBOX"],
+          "_type": "com.linkedin.messenger.Conversation",
+          "conversationParticipants": [
+            {
+              "hostIdentityUrn": "urn:li:fsd_profile:ACoAAAAAAAME",
+              "entityUrn": "urn:li:msg_messagingParticipant:urn:li:fsd_profile:ACoAAAAAAAME",
+              "_type": "com.linkedin.messenger.MessagingParticipant",
+              "participantType": {
+                "member": {
+                  "profileUrl": "https://www.linkedin.com/in/ACoAAAAAAAME",
+                  "firstName": { "text": "Me", "_type": "com.linkedin.pemberly.text.AttributedText" },
+                  "lastName": { "text": "Owner", "_type": "com.linkedin.pemberly.text.AttributedText" },
+                  "distance": "SELF",
+                  "headline": { "text": "Founder", "_type": "com.linkedin.pemberly.text.AttributedText" }
+                },
+                "organization": null
+              }
+            },
+            {
+              "hostIdentityUrn": "urn:li:fsd_profile:ACoAAAAAAA1",
+              "entityUrn": "urn:li:msg_messagingParticipant:urn:li:fsd_profile:ACoAAAAAAA1",
+              "_type": "com.linkedin.messenger.MessagingParticipant",
+              "participantType": {
+                "member": {
+                  "profileUrl": "https://www.linkedin.com/in/ACoAAAAAAA1",
+                  "firstName": { "text": "Alice", "_type": "com.linkedin.pemberly.text.AttributedText" },
+                  "lastName": { "text": "Example", "_type": "com.linkedin.pemberly.text.AttributedText" },
+                  "distance": "DISTANCE_1",
+                  "headline": { "text": "CTO at Example", "_type": "com.linkedin.pemberly.text.AttributedText" }
+                },
+                "organization": null
+              }
+            }
+          ],
+          "messages": {
+            "_type": "com.linkedin.restli.common.CollectionResponse",
+            "elements": [
+              {
+                "entityUrn": "urn:li:msg_message:(urn:li:fsd_profile:ACoAAAAAAAME,2-msg-two)",
+                "backendUrn": "urn:li:messagingMessage:2-msg-two",
+                "deliveredAt": 1789129876484,
+                "subject": null,
+                "body": { "text": "Hi! Sure, let's talk.", "attributes": [], "_type": "com.linkedin.pemberly.text.AttributedText" },
+                "sender": {
+                  "hostIdentityUrn": "urn:li:fsd_profile:ACoAAAAAAA1",
+                  "entityUrn": "urn:li:msg_messagingParticipant:urn:li:fsd_profile:ACoAAAAAAA1",
+                  "_type": "com.linkedin.messenger.MessagingParticipant"
+                },
+                "conversation": { "entityUrn": "urn:li:msg_conversation:(urn:li:fsd_profile:ACoAAAAAAAME,2-chat-one==)" },
+                "_type": "com.linkedin.messenger.Message"
+              }
+            ]
+          }
+        },
+        {
+          "entityUrn": "urn:li:msg_conversation:(urn:li:fsd_profile:ACoAAAAAAAME,2-chat-sponsored==)",
+          "lastActivityAt": 1789000000000,
+          "groupChat": false,
+          "title": null,
+          "categories": ["INBOX", "PRIMARY_INBOX", "INMAIL"],
+          "conversationTypeText": { "text": "Sponsored", "_type": "com.linkedin.pemberly.text.AttributedText" },
+          "_type": "com.linkedin.messenger.Conversation",
+          "conversationParticipants": [
+            {
+              "hostIdentityUrn": "urn:li:fsd_profile:ACoAAAAAAAME",
+              "participantType": { "member": { "distance": "SELF", "firstName": { "text": "Me" }, "lastName": { "text": "Owner" } }, "organization": null }
+            },
+            {
+              "hostIdentityUrn": "urn:li:fsd_company:1337",
+              "participantType": { "member": null, "organization": { "name": { "text": "Ads Inc" } } }
+            }
+          ],
+          "messages": { "elements": [] }
+        },
+        {
+          "entityUrn": "urn:li:msg_conversation:(urn:li:fsd_profile:ACoAAAAAAAME,2-chat-group==)",
+          "lastActivityAt": 1788900000000,
+          "groupChat": true,
+          "title": "Founders",
+          "categories": ["INBOX", "PRIMARY_INBOX"],
+          "_type": "com.linkedin.messenger.Conversation",
+          "conversationParticipants": [
+            { "hostIdentityUrn": "urn:li:fsd_profile:ACoAAAAAAAME", "participantType": { "member": { "distance": "SELF", "firstName": { "text": "Me" }, "lastName": { "text": "Owner" } } } },
+            { "hostIdentityUrn": "urn:li:fsd_profile:ACoAAAAAAA1", "participantType": { "member": { "distance": "DISTANCE_1", "firstName": { "text": "Alice" }, "lastName": { "text": "Example" }, "profileUrl": "https://www.linkedin.com/in/ACoAAAAAAA1" } } },
+            { "hostIdentityUrn": "urn:li:fsd_profile:ACoAAAAAAA2", "participantType": { "member": { "distance": "DISTANCE_2", "firstName": { "text": "Bob" }, "lastName": { "text": "Hidden" }, "profileUrl": "https://www.linkedin.com/in/ACoAAAAAAA2" } } }
+          ],
+          "messages": { "elements": [] }
+        }
+      ]
+    }
+  }
+}

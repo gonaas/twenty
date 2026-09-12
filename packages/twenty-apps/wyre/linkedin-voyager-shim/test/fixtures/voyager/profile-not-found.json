@@ -1,0 +1,4 @@
+{
+  "data": { "entityUrn": "urn:li:collectionResponse:fixture", "paging": { "count": 0, "start": 0, "links": [] }, "*elements": [], "$type": "com.linkedin.restli.common.CollectionResponse" },
+  "included": []
+}
