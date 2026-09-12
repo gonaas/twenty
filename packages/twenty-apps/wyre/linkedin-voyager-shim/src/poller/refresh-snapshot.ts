@@ -237,11 +237,17 @@ const refreshConversations = async ({
   };
   const backfillStartMs = Date.now() - env.MESSAGE_BACKFILL_DAYS * 24 * 60 * 60 * 1000;
   const lastRefreshAt = store.meta.get(META_KEYS.lastFullRefreshAt);
-  // Older pages are only needed while they can still hold threads that changed
-  // since the previous refresh; the first snapshot walks the whole window.
-  const pageFloorMs = lastRefreshAt === null ? backfillStartMs : Math.max(backfillStartMs, Date.parse(lastRefreshAt));
+  const backfillDone = store.meta.get(META_KEYS.conversationBackfillDone) === 'true';
+  // Until the whole window has been listed once, every refresh walks back to
+  // the window floor; afterwards older pages only matter when they can still
+  // hold threads that changed since the previous refresh.
+  const pageFloorMs =
+    backfillDone && lastRefreshAt !== null
+      ? Math.max(backfillStartMs, Date.parse(lastRefreshAt))
+      : backfillStartMs;
   const embeddedMessages: UnipileListedMessage[] = [];
   let lastUpdatedBefore: number | undefined;
+  let reachedFloor = false;
 
   for (let pageIndex = 0; pageIndex < env.CONVERSATION_PAGES_MAX; pageIndex += 1) {
     const response = await voyagerClient.getOrThrow<MessengerConversationsResponse>(
@@ -251,6 +257,7 @@ const refreshConversations = async ({
     const chats = mapConversationsToChats({ response, ownProviderId });
 
     if (chats.length === 0) {
+      reachedFloor = true;
       break;
     }
 
@@ -262,10 +269,15 @@ const refreshConversations = async ({
     );
 
     if (chats.length < CONVERSATIONS_PAGE_SIZE || oldestActivityMs < pageFloorMs) {
+      reachedFloor = true;
       break;
     }
 
     lastUpdatedBefore = oldestActivityMs;
+  }
+
+  if (!backfillDone && reachedFloor) {
+    store.meta.set(META_KEYS.conversationBackfillDone, 'true');
   }
 
   const newReceivedMessages: UnipileListedMessage[] = [];

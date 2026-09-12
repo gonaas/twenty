@@ -2,6 +2,7 @@ import { type DatabaseSync } from 'node:sqlite';
 
 export const META_KEYS = {
   firstSnapshotDone: 'first_snapshot_done',
+  conversationBackfillDone: 'conversation_backfill_done',
   lastFullRefreshAt: 'last_full_refresh_at',
   ownProviderId: 'own_provider_id',
   rateLimitedUntil: 'rate_limited_until',
