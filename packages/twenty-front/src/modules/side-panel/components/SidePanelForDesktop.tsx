@@ -160,12 +160,16 @@ export const SidePanelForDesktop = () => {
   const { width: screenWidth } = useScreenSize();
 
   // A fixed 600px cap wastes a wide display, where the panel is often used to
-  // read a full document. Let it grow with the viewport while keeping enough of
-  // the record list behind it visible to stay a panel rather than a page.
+  // read a full document. Cap it by what the panel leaves behind instead: keep
+  // one minimum panel width of the record list reachable, and let the rest go
+  // to the panel. 600px stays the floor so narrow screens are unaffected.
   const sidePanelConstraints = useMemo(
     () => ({
       ...SIDE_PANEL_CONSTRAINTS,
-      max: Math.max(SIDE_PANEL_CONSTRAINTS.max, Math.round(screenWidth * 0.7)),
+      max: Math.max(
+        SIDE_PANEL_CONSTRAINTS.max,
+        screenWidth - SIDE_PANEL_CONSTRAINTS.min,
+      ),
     }),
     [screenWidth],
   );
