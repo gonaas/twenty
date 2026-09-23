@@ -21,8 +21,9 @@ import { useSetAtomState } from '@/ui/utilities/state/jotai/hooks/useSetAtomStat
 import { styled } from '@linaria/react';
 import { useReducedMotion } from 'framer-motion';
 import { useStore } from 'jotai';
-import { type AnimationEvent, useCallback, useState } from 'react';
+import { type AnimationEvent, useCallback, useMemo, useState } from 'react';
 import { themeCssVariables } from 'twenty-ui/theme-constants';
+import { useScreenSize } from 'twenty-ui/utilities';
 
 const StyledSidePanelWrapper = styled.div<{
   isOpen: boolean;
@@ -156,6 +157,19 @@ export const SidePanelForDesktop = () => {
     setTableWidthResizeIsActive(true);
   }, [closeSidePanelMenu, setTableWidthResizeIsActive]);
 
+  const { width: screenWidth } = useScreenSize();
+
+  // A fixed 600px cap wastes a wide display, where the panel is often used to
+  // read a full document. Let it grow with the viewport while keeping enough of
+  // the record list behind it visible to stay a panel rather than a page.
+  const sidePanelConstraints = useMemo(
+    () => ({
+      ...SIDE_PANEL_CONSTRAINTS,
+      max: Math.max(SIDE_PANEL_CONSTRAINTS.max, Math.round(screenWidth * 0.7)),
+    }),
+    [screenWidth],
+  );
+
   return (
     <>
       <SidePanelWidthEffect />
@@ -164,7 +178,7 @@ export const SidePanelForDesktop = () => {
       />
       <ResizablePanelGap
         side="left"
-        constraints={SIDE_PANEL_CONSTRAINTS}
+        constraints={sidePanelConstraints}
         currentWidth={sidePanelWidth}
         onWidthChange={handleWidthChange}
         onCollapse={handleCollapse}
