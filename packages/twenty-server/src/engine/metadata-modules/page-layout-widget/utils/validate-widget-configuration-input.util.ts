@@ -7,6 +7,7 @@ import { CallRecordingTranscriptConfigurationDTO } from 'src/engine/metadata-mod
 import { EmailThreadConfigurationDTO } from 'src/engine/metadata-modules/page-layout-widget/dtos/email-thread-configuration.dto';
 import { FormFieldConfigurationDTO } from 'src/engine/metadata-modules/page-layout-widget/dtos/form-field-configuration.dto';
 import { FieldConfigurationDTO } from 'src/engine/metadata-modules/page-layout-widget/dtos/field-configuration.dto';
+import { FieldRichTextConfigurationDTO } from 'src/engine/metadata-modules/page-layout-widget/dtos/field-rich-text-configuration.dto';
 import { FrontComponentConfigurationDTO } from 'src/engine/metadata-modules/page-layout-widget/dtos/front-component-configuration.dto';
 import { IframeConfigurationDTO } from 'src/engine/metadata-modules/page-layout-widget/dtos/iframe-configuration.dto';
 import { LineChartConfigurationDTO } from 'src/engine/metadata-modules/page-layout-widget/dtos/line-chart-configuration.dto';
@@ -210,10 +211,11 @@ export const validateWidgetConfigurationInput = ({
         PageLayoutWidgetExceptionCode.INVALID_PAGE_LAYOUT_WIDGET_DATA,
       );
     case WidgetConfigurationType.FIELD_RICH_TEXT:
-      throw new PageLayoutWidgetException(
-        'Field rich text configuration is not supported yet',
-        PageLayoutWidgetExceptionCode.INVALID_PAGE_LAYOUT_WIDGET_DATA,
+      errors = validateWidgetConfigurationByDto(
+        FieldRichTextConfigurationDTO,
+        configuration,
       );
+      break;
     case WidgetConfigurationType.WORKFLOW:
       throw new PageLayoutWidgetException(
         'Workflow configuration is not supported yet',
