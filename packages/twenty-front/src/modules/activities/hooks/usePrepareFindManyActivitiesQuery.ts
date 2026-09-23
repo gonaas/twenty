@@ -10,7 +10,7 @@ import { useUpsertFindManyRecordsQueryInCache } from '@/object-record/cache/hook
 import { getRecordFromCache } from '@/object-record/cache/utils/getRecordFromCache';
 import { generateDepthRecordGqlFieldsFromObject } from '@/object-record/graphql/record-gql-fields/utils/generateDepthRecordGqlFieldsFromObject';
 import { useObjectPermissions } from '@/object-record/hooks/useObjectPermissions';
-import { useObjectMorphJunctionConfigOrThrow } from '@/object-record/record-field/ui/hooks/useObjectMorphJunctionConfigOrThrow';
+import { useObjectMorphJunctionConfig } from '@/object-record/record-field/ui/hooks/useObjectMorphJunctionConfig';
 import { findTargetFieldInfo } from '@/object-record/record-field/ui/utils/junction/findTargetFieldInfo';
 import { getJunctionRecordsFromRecord } from '@/object-record/record-field/ui/utils/junction/getJunctionRecordsFromRecord';
 import { getRelatedRecordIdFromJunction } from '@/object-record/record-field/ui/utils/junction/getRelatedRecordIdFromJunction';
@@ -49,7 +49,9 @@ export const usePrepareFindManyActivitiesQuery = ({
   const cache = useApolloCoreClient().cache;
   const { objectPermissionsByObjectMetadataId } = useObjectPermissions();
 
-  const morphJunctionConfig = useObjectMorphJunctionConfigOrThrow({
+  // Null for objects that are not activities: they own no morph junction, so
+  // there are no activity targets to prefetch.
+  const morphJunctionConfig = useObjectMorphJunctionConfig({
     objectNameSingular: activityObjectNameSingular,
   });
 
@@ -67,6 +69,10 @@ export const usePrepareFindManyActivitiesQuery = ({
     targetableObject: ActivityTargetableObject;
     shouldActivityBeExcluded?: (activityTarget: Task | Note) => boolean;
   }) => {
+    if (!isDefined(morphJunctionConfig)) {
+      return;
+    }
+
     const targetableObjectMetadataItem = objectMetadataItems.find(
       (objectMetadataItem) =>
         objectMetadataItem.nameSingular ===

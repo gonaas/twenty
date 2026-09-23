@@ -14,10 +14,10 @@ import { useCreateOneRecord } from '@/object-record/hooks/useCreateOneRecord';
 import { recordStoreFamilyState } from '@/object-record/record-store/states/recordStoreFamilyState';
 
 import { createOneActivityOperationSignatureFactory } from '@/activities/graphql/operation-signatures/factories/createOneActivityOperationSignatureFactory';
-import { useObjectMorphJunctionConfigOrThrow } from '@/object-record/record-field/ui/hooks/useObjectMorphJunctionConfigOrThrow';
+import { useObjectMorphJunctionConfig } from '@/object-record/record-field/ui/hooks/useObjectMorphJunctionConfig';
 import { getJunctionRecordsFromRecord } from '@/object-record/record-field/ui/utils/junction/getJunctionRecordsFromRecord';
 import { type ActivityTarget } from '@/activities/types/ActivityTarget';
-import { capitalize } from 'twenty-shared/utils';
+import { capitalize, isDefined } from 'twenty-shared/utils';
 
 export const useCreateActivityInDB = ({
   activityObjectNameSingular,
@@ -44,14 +44,17 @@ export const useCreateActivityInDB = ({
       objectNameSingular: activityObjectNameSingular,
     });
 
-  const morphJunctionConfig = useObjectMorphJunctionConfigOrThrow({
+  // Null for objects that are not activities: they own no morph junction, so
+  // there are no activity targets to create alongside the record.
+  const morphJunctionConfig = useObjectMorphJunctionConfig({
     objectNameSingular: activityObjectNameSingular,
   });
 
   const { createManyRecords: createManyActivityTargets } =
     useCreateManyRecords<ActivityTarget>({
       objectNameSingular:
-        morphJunctionConfig.junctionObjectMetadata.nameSingular,
+        morphJunctionConfig?.junctionObjectMetadata.nameSingular ??
+        activityObjectNameSingular,
       shouldMatchRootQueryFilter: true,
     });
 
@@ -64,6 +67,10 @@ export const useCreateActivityInDB = ({
         ...activityToCreate,
         updatedAt: new Date().toISOString(),
       });
+
+      if (!isDefined(morphJunctionConfig)) {
+        return;
+      }
 
       const { junctionObjectMetadata, junctionField } = morphJunctionConfig;
 
