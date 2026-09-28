@@ -4,12 +4,16 @@ import { useHandleSidePanelEscape } from '@/side-panel/hooks/useHandleSidePanelE
 import { useOpenAskAiPageInSidePanel } from '@/side-panel/hooks/useOpenAskAiPageInSidePanel';
 import { useOpenRecordsSearchPageInSidePanel } from '@/side-panel/hooks/useOpenRecordsSearchPageInSidePanel';
 import { useSidePanelMenu } from '@/side-panel/hooks/useSidePanelMenu';
+import { isSidePanelOpenedState } from '@/side-panel/states/isSidePanelOpenedState';
 import { useGlobalHotkeys } from '@/ui/utilities/hotkey/hooks/useGlobalHotkeys';
 import { useHotkeysOnFocusedElement } from '@/ui/utilities/hotkey/hooks/useHotkeysOnFocusedElement';
+import { useAtomStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomStateValue';
 import { Key } from 'ts-key-enum';
 
 export const useCommandMenuHotKeys = () => {
-  const { toggleSidePanelMenu } = useSidePanelMenu();
+  const { closeSidePanelMenu } = useSidePanelMenu();
+
+  const isSidePanelOpened = useAtomStateValue(isSidePanelOpenedState);
 
   const { openRecordsSearchPage } = useOpenRecordsSearchPageInSidePanel();
 
@@ -23,10 +27,22 @@ export const useCommandMenuHotKeys = () => {
     keys: ['ctrl+k', 'meta+k'],
     callback: () => {
       closeKeyboardShortcutMenu();
-      toggleSidePanelMenu();
+
+      if (isSidePanelOpened) {
+        closeSidePanelMenu();
+
+        return;
+      }
+
+      openRecordsSearchPage();
     },
     containsModifier: true,
-    dependencies: [closeKeyboardShortcutMenu, toggleSidePanelMenu],
+    dependencies: [
+      closeKeyboardShortcutMenu,
+      closeSidePanelMenu,
+      isSidePanelOpened,
+      openRecordsSearchPage,
+    ],
   });
 
   useGlobalHotkeys({
