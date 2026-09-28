@@ -71,3 +71,9 @@ screenshots/
 /.diag*.mjs
 /.compare*.mjs
 /.narrow*.mjs
+
+# local codegraph index — per checkout, ~1 GB (never commit)
+**/.codegraph/
+
+# local skill registry artifact
+/.atl/
