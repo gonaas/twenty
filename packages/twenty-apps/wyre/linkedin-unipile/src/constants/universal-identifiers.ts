@@ -34,6 +34,22 @@ export const MESSAGE_DIRECTION_OPTION_UNIVERSAL_IDENTIFIERS = {
   received: 'a0c03a95-2877-48ea-b159-13f00e8c0a50',
 };
 
+export const PENDING_MESSAGE_VIEW_UNIVERSAL_IDENTIFIER =
+  '55511ca7-079f-47ab-8796-fb943ad380af';
+export const PENDING_MESSAGE_VIEW_FIELD_UNIVERSAL_IDENTIFIERS = {
+  name: '85dac3a2-1d1b-4171-9a01-99b4e9b4975d',
+  company: '52e88307-f455-4180-83aa-196176c6f6e3',
+  jobTitle: 'a57b6b69-e337-4f00-9f8f-a1805bcafc05',
+  linkedinConnectedAt: '0f8d1fa0-1e32-4c5a-9f4f-fbaaac38b2f1',
+  linkedinLink: 'c89c1c6d-fb90-4aa0-863e-5e9d3cbb84aa',
+};
+export const PENDING_MESSAGE_VIEW_FILTER_UNIVERSAL_IDENTIFIERS = {
+  connection: '8b305370-dd86-4b5a-9bbe-1b9fda487aae',
+  lastMessageAt: '2acf4c94-3458-4e89-8bcf-acbc6c6f941f',
+};
+export const PENDING_MESSAGE_VIEW_SORT_UNIVERSAL_IDENTIFIER =
+  '5fe3e608-b2ef-4f4f-8ceb-d83ddd05ab7c';
+
 export const POST_INSTALL_LOGIC_FUNCTION_UNIVERSAL_IDENTIFIER =
   '29de2433-0fed-4de2-977f-309aa502aa04';
 export const RECONCILE_LINKEDIN_LOGIC_FUNCTION_UNIVERSAL_IDENTIFIER =
