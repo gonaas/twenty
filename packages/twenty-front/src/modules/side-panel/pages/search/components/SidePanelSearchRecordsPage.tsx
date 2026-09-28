@@ -5,8 +5,12 @@ import { SidePanelList } from '@/side-panel/components/SidePanelList';
 import { useOpenRecordInSidePanel } from '@/side-panel/hooks/useOpenRecordInSidePanel';
 import { SidePanelSearchRecordPreviewCard } from '@/side-panel/pages/search/components/SidePanelSearchRecordPreviewCard';
 import { SIDE_PANEL_SEARCH_RECORD_PREVIEW_WIDTH } from '@/side-panel/pages/search/constants/SidePanelSearchRecordPreviewWidth';
+import { useSidePanelSearchCompanyPeople } from '@/side-panel/pages/search/hooks/useSidePanelSearchCompanyPeople';
 import { useSidePanelSearchRecordPreviewItem } from '@/side-panel/pages/search/hooks/useSidePanelSearchRecordPreviewItem';
-import { useSidePanelSearchRecords } from '@/side-panel/pages/search/hooks/useSidePanelSearchRecords';
+import {
+  useSidePanelSearchRecords,
+  type SearchResultItem,
+} from '@/side-panel/pages/search/hooks/useSidePanelSearchRecords';
 import { getSidePanelSearchResultAnchorId } from '@/side-panel/pages/search/utils/getSidePanelSearchResultAnchorId';
 import { SelectableListItem } from '@/ui/layout/selectable-list/components/SelectableListItem';
 import { useIsMobile } from '@/ui/utilities/responsive/hooks/useIsMobile';
@@ -39,14 +43,68 @@ export const SidePanelSearchRecordsPage = () => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
 
-  const selectableItemIds = useMemo(
-    () => searchResultItems.map((item) => item.id),
-    [searchResultItems],
+  const { companyPeopleItems, singleMatchedCompanyLabel } =
+    useSidePanelSearchCompanyPeople({ searchResultItems });
+
+  const allSearchResultItems = useMemo(
+    () => [...searchResultItems, ...companyPeopleItems],
+    [searchResultItems, companyPeopleItems],
   );
 
-  const previewedItem = useSidePanelSearchRecordPreviewItem(searchResultItems);
+  const selectableItemIds = useMemo(
+    () => allSearchResultItems.map((item) => item.id),
+    [allSearchResultItems],
+  );
+
+  const previewedItem =
+    useSidePanelSearchRecordPreviewItem(allSearchResultItems);
 
   const shouldDisplayPreview = !isMobile && isDefined(previewedItem);
+
+  const renderSearchResultItem = (item: SearchResultItem) => {
+    const isTaskOrNote = [
+      CoreObjectNameSingular.Task,
+      CoreObjectNameSingular.Note,
+    ].includes(item.objectNameSingular as CoreObjectNameSingular);
+
+    const handleClick = () => {
+      if (isTaskOrNote) {
+        openRecordInSidePanel({
+          recordId: item.recordId,
+          objectNameSingular: item.objectNameSingular as CoreObjectNameSingular,
+        });
+      } else {
+        closeCommandMenu();
+        navigate(
+          getAppPath(AppPath.RecordShowPage, {
+            objectNameSingular: item.objectNameSingular,
+            objectRecordId: item.recordId,
+          }),
+        );
+      }
+    };
+
+    return (
+      <SelectableListItem key={item.id} itemId={item.id} onEnter={handleClick}>
+        <div id={getSidePanelSearchResultAnchorId(item.id)}>
+          <CommandMenuItem
+            id={item.id}
+            label={item.label}
+            description={item.objectLabel}
+            onClick={handleClick}
+            LeftComponent={
+              <Avatar
+                type={item.avatarType}
+                avatarUrl={getAbsoluteImageUrl(item.imageUrl)}
+                placeholderColorSeed={item.recordId}
+                placeholder={item.label}
+              />
+            }
+          />
+        </div>
+      </SelectableListItem>
+    );
+  };
 
   return (
     <>
@@ -57,55 +115,19 @@ export const SidePanelSearchRecordsPage = () => {
       >
         {searchResultItems.length > 0 && (
           <SidePanelGroup heading={t`Results`}>
-            {searchResultItems.map((item) => {
-              const isTaskOrNote = [
-                CoreObjectNameSingular.Task,
-                CoreObjectNameSingular.Note,
-              ].includes(item.objectNameSingular as CoreObjectNameSingular);
+            {searchResultItems.map(renderSearchResultItem)}
+          </SidePanelGroup>
+        )}
 
-              const handleClick = () => {
-                if (isTaskOrNote) {
-                  openRecordInSidePanel({
-                    recordId: item.recordId,
-                    objectNameSingular:
-                      item.objectNameSingular as CoreObjectNameSingular,
-                  });
-                } else {
-                  closeCommandMenu();
-                  navigate(
-                    getAppPath(AppPath.RecordShowPage, {
-                      objectNameSingular: item.objectNameSingular,
-                      objectRecordId: item.recordId,
-                    }),
-                  );
-                }
-              };
-
-              return (
-                <SelectableListItem
-                  key={item.id}
-                  itemId={item.id}
-                  onEnter={handleClick}
-                >
-                  <div id={getSidePanelSearchResultAnchorId(item.id)}>
-                    <CommandMenuItem
-                      id={item.id}
-                      label={item.label}
-                      description={item.objectLabel}
-                      onClick={handleClick}
-                      LeftComponent={
-                        <Avatar
-                          type={item.avatarType}
-                          avatarUrl={getAbsoluteImageUrl(item.imageUrl)}
-                          placeholderColorSeed={item.recordId}
-                          placeholder={item.label}
-                        />
-                      }
-                    />
-                  </div>
-                </SelectableListItem>
-              );
-            })}
+        {companyPeopleItems.length > 0 && (
+          <SidePanelGroup
+            heading={
+              isDefined(singleMatchedCompanyLabel)
+                ? t`People at ${singleMatchedCompanyLabel}`
+                : t`People at matching companies`
+            }
+          >
+            {companyPeopleItems.map(renderSearchResultItem)}
           </SidePanelGroup>
         )}
       </SidePanelList>
